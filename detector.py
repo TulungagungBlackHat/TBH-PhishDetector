@@ -12,7 +12,7 @@ BANNER = """\033[91m╔═══════════════════
 def analyze(url):
     score=0; reasons=[]
     parsed=urlparse(url if url.startswith("http") else "https://"+url)
-    domain=parsed.netloc; path=parsed.path; full=url
+    domain=parsed.hostname or parsed.netloc; path=parsed.path; full=url
     if re.match(r"^\d+\.\d+\.\d+\.\d+", domain): score+=3; reasons.append("IP address")
     if len(full)>75: score+=1; reasons.append(f"Long {len(full)}")
     if "@" in full: score+=2; reasons.append("@ trick")
